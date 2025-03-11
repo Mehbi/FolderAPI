@@ -1,12 +1,26 @@
 plugins {
     id 'java'
+    id("com.gradleup.shadow") version "9.0.0-beta10"
+    id 'maven-publish'
 }
 
 group = 'dev.mevi.api'
 version = '1.0-SNAPSHOT'
 
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact shadowJar
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
@@ -18,4 +32,12 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+apply plugin: 'com.gradleup.shadow'
+
+tasks.shadowJar {
+    archiveBaseName = "FolderAPI"
+    archiveClassifier = ""
+    archiveVersion = ""
 }

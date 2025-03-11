@@ -53,7 +53,7 @@ public class Folder {
         File file = new File(directory);
         return Arrays.stream(file.listFiles()).toList();
     }
-    public String getDirectory() {
+    public String directory() {
         return directory;
     }
 }
