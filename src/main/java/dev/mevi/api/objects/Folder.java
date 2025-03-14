@@ -5,6 +5,7 @@ import com.google.common.io.Files;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,9 +28,13 @@ public class Folder {
     }
     public Folder newDirectory(String directoryName) throws FileAlreadyExistsException {
         File file = new File(directory, directoryName);
-        if (contains(file.getName())) throw new FileAlreadyExistsException(file.getName());
+        if (contains(file.getName())) {
+            System.out.println("This directory already exists");
+            return null;
+        }
 
-        if (file.mkdir()) System.out.println(file.getName() + " has been created");
+        file.mkdirs();
+        System.out.println(file.getName() + " has been created");
         return Folder.from(directoryName);
     }
 
@@ -51,7 +56,7 @@ public class Folder {
     }
     private List<File> files() {
         File file = new File(directory);
-        return Arrays.stream(file.listFiles()).toList();
+        return file.listFiles() != null ? Arrays.stream(file.listFiles()).toList() : new ArrayList<>();
     }
     public String directory() {
         return directory;
